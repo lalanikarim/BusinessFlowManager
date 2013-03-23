@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessFlowManager", "BusinessFlowManager\BusinessFlowManager.csproj", "{1EDEDAC7-47CC-424B-9FB9-8596B02C3C00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessFlowManager.Tests", "BusinessFlowManager.Tests\BusinessFlowManager.Tests.csproj", "{4FABC49E-35A7-42DD-A1EA-6D7576B02365}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "miraKLS.BusinessFlow", "miraKLS.BusinessFlow\miraKLS.BusinessFlow.csproj", "{2E11999A-F5E9-4ECD-ACE8-CE21E45E4F5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EDEDAC7-47CC-424B-9FB9-8596B02C3C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EDEDAC7-47CC-424B-9FB9-8596B02C3C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EDEDAC7-47CC-424B-9FB9-8596B02C3C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EDEDAC7-47CC-424B-9FB9-8596B02C3C00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E11999A-F5E9-4ECD-ACE8-CE21E45E4F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E11999A-F5E9-4ECD-ACE8-CE21E45E4F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E11999A-F5E9-4ECD-ACE8-CE21E45E4F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E11999A-F5E9-4ECD-ACE8-CE21E45E4F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FABC49E-35A7-42DD-A1EA-6D7576B02365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FABC49E-35A7-42DD-A1EA-6D7576B02365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FABC49E-35A7-42DD-A1EA-6D7576B02365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FABC49E-35A7-42DD-A1EA-6D7576B02365}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = BusinessFlowManager\BusinessFlowManager.csproj
+	EndGlobalSection
+EndGlobal

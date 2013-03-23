@@ -1,0 +1,5 @@
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collection
+@model IList<Field>
+<h2>@ViewData["Message"]</h2>
+
