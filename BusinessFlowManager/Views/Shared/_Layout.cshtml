@@ -4,7 +4,13 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-	@RenderBody()
+	<div>
+		<div>@Html.ActionLink("Fields","Index","Field")</div>
+		<div>@Html.ActionLink("Forms","Index","Form")</div>
+	</div>
+	<div>
+		@RenderBody()
+	</div>
 </body>
 </html>
 

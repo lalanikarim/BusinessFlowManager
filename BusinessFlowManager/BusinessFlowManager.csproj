@@ -57,6 +57,12 @@
     <Reference Include="System.Web.WebPages">
       <HintPath>..\..\..\Downloads\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\System.Web.WebPages.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\..\..\Downloads\CSharpDriver-1.8\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\..\..\Downloads\CSharpDriver-1.8\MongoDB.Driver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
@@ -64,6 +70,7 @@
     <Folder Include="Scripts\" />
     <Folder Include="Controllers\SetupControllers\" />
     <Folder Include="Views\Field\" />
+    <Folder Include="Views\Form\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -72,6 +79,7 @@
     </Compile>
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\SetupControllers\FieldController.cs" />
+    <Compile Include="Controllers\SetupControllers\FormController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -85,7 +93,7 @@
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="Views\Shared\_SetupLayout.cshtml" />
     <None Include="Views\Field\Index.cshtml" />
-    <None Include="Views\Field\Fields.cshtml" />
+    <None Include="Views\Form\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -96,4 +104,10 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\miraKLS.BusinessFlow\miraKLS.BusinessFlow.csproj">
+      <Project>{2E11999A-F5E9-4ECD-ACE8-CE21E45E4F5C}</Project>
+      <Name>miraKLS.BusinessFlow</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

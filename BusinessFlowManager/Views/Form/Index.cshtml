@@ -1,0 +1,64 @@
+@using miraKLS.BusinessFlow
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+@model IList<Form>
+
+@{
+	Form selectedForm = ViewData["SelectedForm"] as Form;
+}
+
+<h2>Forms</h2>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(Form form in Model){
+		<tr>
+			<td>@form.Name</td>
+			<td>@form.Description</td>
+			<td>@Html.ActionLink("View","Index",new{Id = form.Name})</td>
+			<td>@Html.ActionLink("Delete","Delete",new{Id = form.Name})</td>
+		</tr>
+}
+	</tbody>
+</table>
+
+<h3>Add/Modify Form</h3>
+@using(Html.BeginForm("Save","Form",FormMethod.Post)){
+	<table>
+		<tbody>
+			<tr>
+				<td>Name</td><td>@Html.TextBox("formMD.Name",selectedForm != null && selectedForm.Name != null? selectedForm.Name:string.Empty)</td>
+			</tr>
+			<tr>
+				<td>Description</td><td>@Html.TextBox("formMD.Description",selectedForm != null && selectedForm.Description!= null?selectedForm.Description:string.Empty)</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="submit">Save</button>
+	Html.EndForm();
+}
+
+@if(selectedForm != null){
+<h3>Contents</h3>
+	using(Html.BeginForm("ModifyContent","Form",FormMethod.Post)){
+		@Html.Hidden("formId",selectedForm.Name)
+		<select name="fieldId">
+			@foreach(Field field in DBHelper.GetInstance().FieldsCollection().FindAllAs<Field>()){
+				<option value="@field.Name">@field.Name</option>
+			}
+		</select>
+		@Html.Hidden("contentAction",ContentAction.Add)
+		<button type="submit">Add</button>
+		Html.EndForm();
+	}
+	foreach(Field field in selectedForm.GetContents()){
+		<div>@field.Name @Html.ActionLink("Delete","ModifyContent",new {formId=selectedForm.Name,fieldId=field.Name,contentAction=ContentAction.Remove}) </div>
+	}
+}

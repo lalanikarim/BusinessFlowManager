@@ -1,4 +1,6 @@
 using System;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 
 namespace miraKLS.BusinessFlow.Metadata
 {
@@ -14,6 +16,7 @@ namespace miraKLS.BusinessFlow.Metadata
 			Description = description;
 		}
 
+		[BsonId]
 		public string Name{get;set;}
 		public string Description{get;set;}
 	}

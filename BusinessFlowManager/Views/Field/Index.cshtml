@@ -1,2 +1,55 @@
-<h2>@ViewData["Message"]</h2>
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+@model IList<Field>
+@{
+	Field selectedField = ViewData["SelectedField"] as Field;
+}
+<h2>Fields</h2>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Type</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(Field field in Model){
+		<tr>
+			<td>@Html.ActionLink(field.Name,"Index",new{Id = field.Name})</td>
+			<td>@field.Description</td>
+			<td>@field.FieldType</td>
+			<td>@Html.ActionLink("Delete","Delete",new{Id = field.Name})</td>
+		</tr>
+}
+	</tbody>
+</table>
 
+<h3>Add/Modify Field</h3>
+@using(Html.BeginForm("Save","Field",FormMethod.Post)){
+	<table>
+		<tbody>
+			<tr>
+				<td>Name</td><td>@Html.TextBox("field.Name",selectedField != null && selectedField.Name != null? selectedField.Name:string.Empty)</td>
+			</tr>
+			<tr>
+				<td>Description</td><td>@Html.TextBox("field.Description",selectedField != null && selectedField.Description!= null?selectedField.Description:string.Empty)</td>
+			</tr>
+			<tr>
+				<td>Field Type</td>
+				<td>
+					<select name="field.FieldType">
+						<option @Html.Encode(selectedField != null && selectedField.FieldType == BsonType.Boolean?"selected":string.Empty) >Boolean</option>
+						<option @Html.Encode(selectedField != null && selectedField.FieldType == BsonType.DateTime?"selected":string.Empty) >DateTime</option>
+						<option @Html.Encode(selectedField != null && selectedField.FieldType == BsonType.Double?"selected":string.Empty) >Double</option>
+						<option @Html.Encode(selectedField != null && selectedField.FieldType == BsonType.String?"selected":string.Empty) >String</option>						
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="submit">Save</button>
+	Html.EndForm();
+}
