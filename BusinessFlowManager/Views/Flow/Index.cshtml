@@ -1,0 +1,97 @@
+@using miraKLS.BusinessFlow
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+@model IList<Flow>
+
+@{
+	Flow selectedFlow = ViewData["SelectedFlow"] as Flow;
+}
+
+<h2>Flows</h2>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(Flow flow in Model){
+		<tr>
+			<td>@Html.ActionLink(flow.Name,"Index",new{Id = flow.Name})</td>
+			<td>@flow.Description</td>
+			<td>@Html.ActionLink("Delete","Delete",new{Id = flow.Name})</td>
+		</tr>
+}
+	</tbody>
+</table>
+
+<h3>Add/Modify Flow</h3>
+@using(Html.BeginForm("Save","Flow",FormMethod.Post)){
+	<table>
+		<tbody>
+			<tr>
+				<td>Name</td><td>@Html.TextBox("flowMD.Name",selectedFlow != null && selectedFlow.Name != null? selectedFlow.Name:string.Empty)</td>
+			</tr>
+			<tr>
+				<td>Description</td><td>@Html.TextBox("flowMD.Description",selectedFlow != null && selectedFlow.Description!= null?selectedFlow.Description:string.Empty)</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="submit">Save</button>
+	Html.EndForm();
+}
+
+@if(selectedFlow != null){
+<h3>States</h3>
+	using(Html.BeginForm("ModifyContent","Flow",FormMethod.Post)){
+		@Html.Hidden("flowId",selectedFlow.Name)
+		@Html.TextBox("stateId")
+		<select name="taskId">
+			@foreach(Task task in DBHelper.GetInstance().TasksCollection().FindAllAs<Task>()){
+				<option value="@task.Name">@task.Description</option>
+			}
+		</select>
+		@Html.TextBox("answer")
+		@Html.TextBox("nextStateId");
+		@Html.Hidden("contentAction",ContentAction.Add)
+		<button type="submit">Add</button>
+		Html.EndForm();
+	}
+	
+	int x = 0;
+	int last = selectedFlow.Contents != null ? selectedFlow.Contents.Count - 1:0;
+	<table>
+		<thead>
+			<tr>
+				<th>Group</th>
+				<th>Task</th>
+				<th colspan="3">Actions</th>				
+			</tr>
+		</thead>
+		<tbody>
+	@foreach(FlowContent flowContent in selectedFlow.GetContents()){
+			<tr>
+				<td>@flowContent.GroupInfo.Description</td>
+				<td>@flowContent.TaskInfo.Description</td>
+				<td>
+				@if(x > 0){			
+					@Html.ActionLink("^","ModifyContent",new {flowId=selectedFlow.Name,groupId=flowContent.GroupInfo.Name,taskId=flowContent.TaskInfo.Name,contentAction=ContentAction.Up})
+				}
+				</td>
+				<td>
+				@if(x < last){
+					@Html.ActionLink("v","ModifyContent",new {flowId=selectedFlow.Name,groupId=flowContent.GroupInfo.Name,taskId=flowContent.TaskInfo.Name,contentAction=ContentAction.Down})
+				}				
+				@{x++;}
+				</td>
+				<td>
+				@Html.ActionLink("x","ModifyContent",new {flowId=selectedFlow.Name,groupId=flowContent.GroupInfo.Name,taskId=flowContent.TaskInfo.Name,contentAction=ContentAction.Remove})
+				</td>				
+			</tr>
+	}
+		</tbody>
+	</table>
+}

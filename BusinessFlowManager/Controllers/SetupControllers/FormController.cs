@@ -14,10 +14,11 @@ namespace BusinessFlowManager.Controllers
 {
     public class FormController : Controller
     {
+		MongoCollection<Form> formsCollection = DBHelper.GetInstance().FormsCollection();
+
         public ActionResult Index(string Id)
         {
 			IList<Form> model = null;
-			MongoCollection<Form> formsCollection = DBHelper.GetInstance().FormsCollection();
 			if(formsCollection != null)
 			{
 				model = formsCollection.FindAll().ToList();
@@ -45,7 +46,6 @@ namespace BusinessFlowManager.Controllers
 
 		public ActionResult Delete(string Id)
 		{
-			MongoCollection<Form> formsCollection = DBHelper.GetInstance().FormsCollection();
 			if(!string.IsNullOrEmpty(Id) && formsCollection != null)
 			{
 				var query = Query<Field>.EQ(f => f.Name,Id);
@@ -56,7 +56,6 @@ namespace BusinessFlowManager.Controllers
 
 		public ActionResult Save(Form formMD)
 		{
-			MongoCollection<Form> formsCollection = DBHelper.GetInstance().FormsCollection();
 			if(formsCollection != null && formMD != null)
 			{
 				Form form = GetForm(formMD.Name);
@@ -76,7 +75,6 @@ namespace BusinessFlowManager.Controllers
 		
 		public ActionResult ModifyContent(string formId, string fieldId,ContentAction contentAction)
 		{
-			MongoCollection<Form> formsCollection = DBHelper.GetInstance().FormsCollection();
 			if(formsCollection != null && !string.IsNullOrEmpty(formId) && !string.IsNullOrEmpty(fieldId))
 			{
 				Form form = GetForm(formId);
@@ -86,30 +84,55 @@ namespace BusinessFlowManager.Controllers
 					{
 						MongoDBRef dbref = new MongoDBRef(DBHelper.GetInstance().FieldsCollection().Name,fieldId);
 
-						if(contentAction == ContentAction.Add)
+						if(new ContentAction[]{ContentAction.Remove,ContentAction.Up,ContentAction.Down}.Contains(contentAction))
+						{
+							if(form.Contents.Contains(dbref))
+							{
+								if(contentAction == ContentAction.Remove)
+								{
+									form.Contents.Remove(dbref);
+								}
+								else if(contentAction == ContentAction.Up)
+								{
+									LinkedListNode<MongoDBRef> prev = form.Contents.Find(dbref).Previous;
+									if(prev != null)
+									{
+										form.Contents.Remove(dbref);
+										form.Contents.AddBefore(prev,dbref);
+									}
+								}
+								else if(contentAction == ContentAction.Down)
+								{
+									LinkedListNode<MongoDBRef> next = form.Contents.Find(dbref).Next;
+									if(next != null)
+									{
+										form.Contents.Remove(dbref);
+										form.Contents.AddAfter(next,dbref);
+									}
+								}
+							}
+						}
+						else
 						{
 							if(!form.Contents.Contains(dbref))
 							{
 								form.Contents.AddLast(dbref);
 							}
 						}
-						else
-						{
-							if(form.Contents.Contains(dbref))
-							{
-								form.Contents.Remove(dbref);
-							}
-						}
-						formsCollection.Save(form);
 
+						formsCollection.Save(form);
 					}
 				}
 			}
 			return RedirectToAction("Index",new{Id = formId});
 		}
 
-
+		public ActionResult Preview(string id)
+		{
+			Form model = (from f in formsCollection.AsQueryable()
+			              where f.Name == id
+			              select f).FirstOrDefault();
+			return View (model);
+		}
     }
-
-
 }

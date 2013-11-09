@@ -48,6 +48,7 @@
     <Compile Include="Metadata\MetadataObject.cs" />
     <Compile Include="Metadata\LinkedObject.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="Metadata\Group.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

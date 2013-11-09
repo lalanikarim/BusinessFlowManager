@@ -1,0 +1,91 @@
+@using miraKLS.BusinessFlow
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+@model IList<Task>
+
+@{
+	Task selectedTask = ViewData["SelectedTask"] as Task;
+}
+
+<h2>Tasks</h2>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(Task task in Model){
+		<tr>
+			<td>@Html.ActionLink(task.Name,"Index",new{Id = task.Name})</td>
+			<td>@task.Description</td>
+			<td>@Html.ActionLink("Delete","Delete",new{Id = task.Name})</td>
+		</tr>
+}
+	</tbody>
+</table>
+
+<h3>Add/Modify Task</h3>
+@using(Html.BeginForm("Save","Task",FormMethod.Post)){
+	<table>
+		<tbody>
+			<tr>
+				<td>Name</td><td>@Html.TextBox("taskMD.Name",selectedTask != null && selectedTask.Name != null? selectedTask.Name:string.Empty)</td>
+			</tr>
+			<tr>
+				<td>Description</td><td>@Html.TextBox("taskMD.Description",selectedTask != null && selectedTask.Description!= null?selectedTask.Description:string.Empty)</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="submit">Save</button>
+	Html.EndForm();
+}
+
+@if(selectedTask != null){
+<h3>Contents</h3>
+	using(Html.BeginForm("ModifyContent","Task",FormMethod.Post)){
+		@Html.Hidden("taskId",selectedTask.Name)
+		<select name="formId">
+			@foreach(Form form in DBHelper.GetInstance().FormsCollection().FindAllAs<Form>()){
+				<option value="@form.Name">@form.Name</option>
+			}
+		</select>
+		@Html.Hidden("contentAction",ContentAction.Add)
+		<button type="submit">Add</button>
+		Html.EndForm();
+	}
+	int x = 0;
+	int last = selectedTask.Contents.Count - 1;
+	<table>
+		<thead>
+			<tr>
+				<th>Form</th>
+				<th colspan="3">Actions</th>				
+			</tr>
+		</thead>
+		<tbody>
+	@foreach(Form form in selectedTask.GetContents()){
+			<tr>
+				<td>@form.Name</td>
+				<td>
+				@if(x > 0){			
+					@Html.ActionLink("^","ModifyContent",new {taskId=selectedTask.Name,formId=form.Name,contentAction=ContentAction.Up})				
+				}
+				</td>
+				<td>
+				@if(x < last){
+					@Html.ActionLink("v","ModifyContent",new {taskId=selectedTask.Name,formId=form.Name,contentAction=ContentAction.Down})
+				}				
+				@{x++;}
+				</td>
+				<td>
+				@Html.ActionLink("x","ModifyContent",new {taskId=selectedTask.Name,formId=form.Name,contentAction=ContentAction.Remove})
+				</td>				
+			</tr>
+	}
+		</tbody>
+	</table>
+}

@@ -2,11 +2,19 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+    <style>
+    	.navLinks > div{
+    		display: inline;
+    	}
+    </style>
 </head>
 <body>
-	<div>
+	<div class="navLinks">
+		<div>@Html.ActionLink("Groups","Index","Group")</div>
 		<div>@Html.ActionLink("Fields","Index","Field")</div>
 		<div>@Html.ActionLink("Forms","Index","Form")</div>
+		<div>@Html.ActionLink("Tasks","Index","Task")</div>
+		<div>@Html.ActionLink("Flows","Index","Flow")</div>
 	</div>
 	<div>
 		@RenderBody()

@@ -14,15 +14,15 @@
 		<tr>
 			<th>Name</th>
 			<th>Description</th>
-			<th></th>
+			<th colspan="2"></th>
 		</tr>
 	</thead>
 	<tbody>
 @foreach(Form form in Model){
 		<tr>
-			<td>@form.Name</td>
+			<td>@Html.ActionLink(form.Name,"Index",new{Id = form.Name})</td>
 			<td>@form.Description</td>
-			<td>@Html.ActionLink("View","Index",new{Id = form.Name})</td>
+			<td>@Html.ActionLink("Preview","Preview",new{Id = form.Name})</td>
 			<td>@Html.ActionLink("Delete","Delete",new{Id = form.Name})</td>
 		</tr>
 }
@@ -58,7 +58,35 @@
 		<button type="submit">Add</button>
 		Html.EndForm();
 	}
-	foreach(Field field in selectedForm.GetContents()){
-		<div>@field.Name @Html.ActionLink("Delete","ModifyContent",new {formId=selectedForm.Name,fieldId=field.Name,contentAction=ContentAction.Remove}) </div>
+	int x = 0;
+	int last = selectedForm.Contents.Count - 1;
+	<table>
+		<thead>
+			<tr>
+				<th>Field</th>
+				<th colspan="3">Actions</th>				
+			</tr>
+		</thead>
+		<tbody>
+	@foreach(Field field in selectedForm.GetContents()){
+			<tr>
+				<td>@field.Name</td>
+				<td>
+				@if(x > 0){			
+					@Html.ActionLink("^","ModifyContent",new {formId=selectedForm.Name,fieldId=field.Name,contentAction=ContentAction.Up})				
+				}
+				</td>
+				<td>
+				@if(x < last){
+					@Html.ActionLink("v","ModifyContent",new {formId=selectedForm.Name,fieldId=field.Name,contentAction=ContentAction.Down})
+				}				
+				@{x++;}
+				</td>
+				<td>
+				@Html.ActionLink("x","ModifyContent",new {formId=selectedForm.Name,fieldId=field.Name,contentAction=ContentAction.Remove})
+				</td>				
+			</tr>
 	}
+		</tbody>
+	</table>
 }

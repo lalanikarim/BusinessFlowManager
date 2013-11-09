@@ -14,11 +14,13 @@ namespace BusinessFlowManager.Controllers
 {
     public class FieldController : Controller
     {
+		MongoCollection<Field> fieldsCollection = DBHelper.GetInstance().FieldsCollection();
+
         public ActionResult Index(string Id = null)
         {
 			IList<Field> model = null;
 			ViewData["SelectedField"] = default(Field);
-			MongoCollection<Field> fieldsCollection = DBHelper.GetInstance().FieldsCollection();
+
 			if(fieldsCollection != null)
 			{
 				model = fieldsCollection.FindAll().ToList();
@@ -48,7 +50,6 @@ namespace BusinessFlowManager.Controllers
 
 		public ActionResult Save(Field field)
 		{
-			MongoCollection<Field> fieldsCollection = DBHelper.GetInstance().FieldsCollection();
 			if(fieldsCollection != null)
 			{
 				fieldsCollection.Save(field);
@@ -58,7 +59,6 @@ namespace BusinessFlowManager.Controllers
 
 		public ActionResult Delete(string Id)
 		{
-			MongoCollection<Field> fieldsCollection = DBHelper.GetInstance().FieldsCollection();
 			if(!string.IsNullOrEmpty(Id) && fieldsCollection != null)
 			{
 				var query = Query<Field>.EQ(f => f.Name,Id);

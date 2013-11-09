@@ -11,6 +11,14 @@ namespace miraKLS.BusinessFlow.Metadata
 		public Task ()
 		{
 		}
+		public LinkedList<Form> GetContents()
+		{
+			LinkedList<Form> tempList = new LinkedList<Form>();
+			foreach (var item in Contents) {
+				tempList.AddLast(DBHelper.GetInstance().GetDatabase().FetchDBRefAs<Form>(item));
+			}
+			return tempList;
+		}
 	}
 }
 

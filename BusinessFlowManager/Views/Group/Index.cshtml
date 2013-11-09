@@ -1,0 +1,42 @@
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+@model IList<Group>
+@{
+	Group selectedGroup = ViewData["SelectedGroup"] as Group;
+}
+<h2>Groups</h2>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(Group group in Model){
+		<tr>
+			<td>@Html.ActionLink(group.Name,"Index",new{Id = group.Name})</td>
+			<td>@group.Description</td>
+			<td>@Html.ActionLink("Delete","Delete",new{Id = group.Name})</td>
+		</tr>
+}
+	</tbody>
+</table>
+
+<h3>Add/Modify Group</h3>
+@using(Html.BeginForm("Save","Group",FormMethod.Post)){
+	<table>
+		<tbody>
+			<tr>
+				<td>Name</td><td>@Html.TextBox("group.Name",selectedGroup != null && selectedGroup.Name != null? selectedGroup.Name:string.Empty)</td>
+			</tr>
+			<tr>
+				<td>Description</td><td>@Html.TextBox("group.Description",selectedGroup != null && selectedGroup.Description!= null?selectedGroup.Description:string.Empty)</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="submit">Save</button>
+	Html.EndForm();
+}

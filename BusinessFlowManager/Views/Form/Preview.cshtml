@@ -1,0 +1,21 @@
+﻿@using miraKLS.BusinessFlow
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+
+@model Form
+<h2>Form Preview - @Model.Name</h2>
+@if(Model.Contents.Count > 0) {
+	<table>
+		<tr>
+			<th>Field Name</th><th>Value</th>
+		</tr>
+	@foreach(Field field in Model.GetContents().ToList()) {
+		<tr>
+			<td>@field.Description</td>
+			<td></td>
+		</tr>
+	}
+	</table>
+}
+@Html.ActionLink("Back","Index","Form")

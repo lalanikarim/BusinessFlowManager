@@ -12,22 +12,22 @@
     <AssemblyName>BusinessFlowManager</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,6 +71,9 @@
     <Folder Include="Controllers\SetupControllers\" />
     <Folder Include="Views\Field\" />
     <Folder Include="Views\Form\" />
+    <Folder Include="Views\Task\" />
+    <Folder Include="Views\Group\" />
+    <Folder Include="Views\Flow\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -80,11 +83,15 @@
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\SetupControllers\FieldController.cs" />
     <Compile Include="Controllers\SetupControllers\FormController.cs" />
+    <Compile Include="Controllers\SetupControllers\TaskController.cs" />
+    <Compile Include="Controllers\SetupControllers\GroupController.cs" />
+    <Compile Include="Controllers\SetupControllers\FlowController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Form\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
@@ -94,6 +101,9 @@
     <None Include="Views\Shared\_SetupLayout.cshtml" />
     <None Include="Views\Field\Index.cshtml" />
     <None Include="Views\Form\Index.cshtml" />
+    <None Include="Views\Task\Index.cshtml" />
+    <None Include="Views\Group\Index.cshtml" />
+    <None Include="Views\Flow\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
