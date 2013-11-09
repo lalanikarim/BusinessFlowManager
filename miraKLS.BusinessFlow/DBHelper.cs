@@ -26,6 +26,7 @@ namespace miraKLS.BusinessFlow
 		private MongoCollection<Flow> flowsCollection = null;
 		private MongoCollection<FlowState> flowStatesCollection = null;
 		private MongoCollection<Group> groupsCollection = null;
+		private MongoCollection<BsonDocument> tempCollection = null;
 
 		private Error dbError;
 
@@ -170,6 +171,16 @@ namespace miraKLS.BusinessFlow
 			
 			return model;
 		}
+
+		public MongoCollection<BsonDocument> TempCollection()
+		{
+			if(tempCollection == null)
+			{
+				tempCollection = GetDatabase().GetCollection<BsonDocument>("temps");
+			}
+			return tempCollection;
+		}
+
 
 		public T FetchFromRef<T>(MongoDBRef dbref)
 		{

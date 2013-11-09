@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +16,7 @@ namespace BusinessFlowManager.Controllers
     public class FormController : Controller
     {
 		MongoCollection<Form> formsCollection = DBHelper.GetInstance().FormsCollection();
+		MongoCollection<BsonDocument> tempCollection = DBHelper.GetInstance().TempCollection();
 
         public ActionResult Index(string Id)
         {
@@ -133,6 +135,17 @@ namespace BusinessFlowManager.Controllers
 			              where f.Name == id
 			              select f).FirstOrDefault();
 			return View (model);
+		}
+
+		public ActionResult Process(FormCollection formValues)
+		{
+			BsonDocument doc = new BsonDocument();
+			foreach(var key in formValues.Keys)
+			{
+				doc.Add(key.ToString(),formValues[key.ToString()]);
+			}
+			tempCollection.Save(doc);
+			return RedirectToAction("Index");
 		}
     }
 }

@@ -6,6 +6,8 @@
 @model Form
 <h2>Form Preview - @Model.Name</h2>
 @if(Model.Contents.Count > 0) {
+    using(Html.BeginForm("Process","Form",FormMethod.Post)){
+    @Html.Hidden("Form",Model.Name)
 	<table>
 		<tr>
 			<th>Field Name</th><th>Value</th>
@@ -13,9 +15,15 @@
 	@foreach(Field field in Model.GetContents().ToList()) {
 		<tr>
 			<td>@field.Description</td>
-			<td></td>
+			<td>@Html.Editor(field.Name)</td>
 		</tr>
 	}
+		<tr>
+			<td></td>
+			<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+		</tr>
 	</table>
+	Html.EndForm();
+	}
 }
 @Html.ActionLink("Back","Index","Form")
