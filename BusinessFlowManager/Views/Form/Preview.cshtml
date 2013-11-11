@@ -1,6 +1,7 @@
 ﻿@using miraKLS.BusinessFlow
 @using miraKLS.BusinessFlow.Metadata
 @using System.Collections
+@using System.Collections.Generic
 @using MongoDB.Bson
 
 @model Form
@@ -25,5 +26,31 @@
 	</table>
 	Html.EndForm();
 	}
+	<style type="text/css">
+	.previewContainer{
+		
+	}
+	.previewBox{
+		width:300px;
+		display:inline-block;
+	}
+	.previewBox > div, .previewBox > div > div{
+		border:1px black solid;
+	}
+	.previewBox > div > div > div{
+		display: inline-block;
+	}
+	</style>
+	<div class="previewContainer">
+	@if(ViewData.ContainsKey("Documents") && ViewData["Documents"] != null)
+	{
+		foreach(BsonDocument doc in (IList)ViewData["Documents"])
+		{
+			ViewData["CurrentDocument"] = doc;
+			
+			@Html.Partial("FormDataPreview",ViewData);
+		}
+	}
+	</div>
 }
 @Html.ActionLink("Back","Index","Form")

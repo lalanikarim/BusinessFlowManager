@@ -92,6 +92,7 @@
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Content Include="Views\Form\Preview.cshtml" />
+    <Content Include="Views\Shared\FormDataPreview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />

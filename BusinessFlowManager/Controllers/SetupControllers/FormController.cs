@@ -134,18 +134,24 @@ namespace BusinessFlowManager.Controllers
 			Form model = (from f in formsCollection.AsQueryable()
 			              where f.Name == id
 			              select f).FirstOrDefault();
+
+			IList<BsonDocument> documents = tempCollection.Find(Query.EQ("Form",id)).ToList();
+			ViewData["Documents"] = documents;
 			return View (model);
 		}
 
 		public ActionResult Process(FormCollection formValues)
 		{
 			BsonDocument doc = new BsonDocument();
+			string id = string.Empty;
 			foreach(var key in formValues.Keys)
 			{
+				if(key.ToString() == "Form")
+					id = formValues[key.ToString()];
 				doc.Add(key.ToString(),formValues[key.ToString()]);
 			}
 			tempCollection.Save(doc);
-			return RedirectToAction("Index");
+			return RedirectToAction("Preview",new {Id = id});
 		}
     }
 }

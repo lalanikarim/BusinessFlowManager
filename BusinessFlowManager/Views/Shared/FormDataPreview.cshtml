@@ -1,0 +1,19 @@
+﻿@using miraKLS.BusinessFlow
+@using miraKLS.BusinessFlow.Metadata
+@using System.Collections
+@using MongoDB.Bson
+
+@{
+	BsonDocument doc = ViewData["CurrentDocument"] as BsonDocument;
+}
+<div class="previewBox">
+	<span>ID: @doc["_id"]</span>
+	<div>
+	@foreach(BsonElement el in doc){
+		if(el.Name != "_id" && el.Name != "Form"){
+			<div><div style="width:118px">@el.Name</div><div style="width:178px;">@el.Value.AsString</div></div>
+		}
+	}
+	</div>
+	<br/>
+</div>
