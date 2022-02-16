@@ -7,14 +7,16 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: secret
     ports:
       - 27017:27017
+    volumes:
+      - ./datadb:/data/db:rw
 
   mongo-express:
     image: docker.io/mongo-express
     restart: always
     ports:
       - 8081:8081
-    environments:
+    environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: secret
-      ME_CONFIG_MONGODB_URL: mongodb://admin:secret@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://admin:secret@localhost:27017/
 
