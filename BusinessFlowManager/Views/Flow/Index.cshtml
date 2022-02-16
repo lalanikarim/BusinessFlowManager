@@ -49,7 +49,12 @@
 	using(Html.BeginForm("ModifyContent","Flow",FormMethod.Post)){
 		@Html.Hidden("flowId",selectedFlow.Name)
 		@Html.TextBox("stateId")
-		<select name="taskId">
+		<select name="groupId">
+      @foreach(Group group in DBHelper.GetInstance().GroupsCollection().FindAllAs<Group>()){
+        <option value="@group.Name">@group.Description</option>
+      }
+    </select>
+    <select name="taskId">
 			@foreach(Task task in DBHelper.GetInstance().TasksCollection().FindAllAs<Task>()){
 				<option value="@task.Name">@task.Description</option>
 			}

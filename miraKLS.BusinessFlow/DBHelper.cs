@@ -45,7 +45,7 @@ namespace miraKLS.BusinessFlow
 			{
 				if(client == null)
 				{
-					client = new MongoClient("mongodb://localhost/");
+					client = new MongoClient("mongodb://admin:secret@localhost:27017/");
 					server = client.GetServer();
 				}
 				database = server.GetDatabase("businessflow");

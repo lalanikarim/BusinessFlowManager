@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BusinessFlowManager.Tests</RootNamespace>
     <AssemblyName>BusinessFlowManager.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
